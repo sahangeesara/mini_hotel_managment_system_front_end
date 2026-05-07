@@ -5,7 +5,6 @@ class HotelService {
   // GET ALL HOTELS
   async getAllHotels() {
     const response = await fetch(API_URL);
-    console.log(response);
     if (!response.ok) {
       throw new Error("Failed to fetch hotels");
     }
@@ -22,7 +21,6 @@ class HotelService {
 
     if (!response.ok) {
       const error = await response.json();
-      console.log(error);
       throw error;
     }
 
@@ -40,7 +38,6 @@ class HotelService {
 
     if (!response.ok) {
       const error = await response.json();
-      console.log(error);
       throw error;
     }
 

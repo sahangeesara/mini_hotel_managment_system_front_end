@@ -34,6 +34,8 @@ function Hotel() {
   const [editingId, setEditingId] = useState(null);
   const [loading, setLoading] = useState(false);
   const [preview, setPreview] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const ADMIN_ITEMS_PER_PAGE = 5;
 
   useEffect(() => {
     fetchHotels();
@@ -142,6 +144,24 @@ function Hotel() {
     setForm(EMPTY_FORM);
     setEditingId(null);
     setPreview(null);
+  };
+
+  // Calculate paginated hotels for table
+  const totalPages = Math.ceil(hotelList.length / ADMIN_ITEMS_PER_PAGE);
+  const startIndex = (currentPage - 1) * ADMIN_ITEMS_PER_PAGE;
+  const endIndex = startIndex + ADMIN_ITEMS_PER_PAGE;
+  const paginatedHotelList = hotelList.slice(startIndex, endIndex);
+
+  const handleAdminPreviousPage = () => {
+    if (currentPage > 1) setCurrentPage(currentPage - 1);
+  };
+
+  const handleAdminNextPage = () => {
+    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+  };
+
+  const handleAdminPageClick = (pageNum) => {
+    setCurrentPage(pageNum);
   };
 
   const handleSubmit = async (e) => {
@@ -547,7 +567,7 @@ function Hotel() {
                   </td>
                 </tr>
               ) : (
-                hotelList.map((hotel) => (
+                paginatedHotelList.map((hotel) => (
                   <tr key={hotel.id}>
                     <td>{hotel.hotel_code}</td>
 
@@ -625,6 +645,38 @@ function Hotel() {
             </tbody>
           </table>
         </div>
+
+        {hotelList.length > ADMIN_ITEMS_PER_PAGE && (
+          <div className="admin-pagination-controls">
+            <button 
+              className="pagination-btn" 
+              onClick={handleAdminPreviousPage} 
+              disabled={currentPage === 1}
+            >
+              ← Previous
+            </button>
+
+            <div className="pagination-numbers">
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+                <button
+                  key={pageNum}
+                  className={`pagination-number ${currentPage === pageNum ? 'active' : ''}`}
+                  onClick={() => handleAdminPageClick(pageNum)}
+                >
+                  {pageNum}
+                </button>
+              ))}
+            </div>
+
+            <button 
+              className="pagination-btn" 
+              onClick={handleAdminNextPage} 
+              disabled={currentPage === totalPages}
+            >
+              Next →
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
