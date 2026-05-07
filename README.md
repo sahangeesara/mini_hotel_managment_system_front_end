@@ -1,70 +1,97 @@
-# Getting Started with Create React App
+# Mini Hotel Management System — Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This repository contains the React frontend for the Mini Hotel Management System. It provides:
 
-## Available Scripts
+- A client-facing hotel listing (cards) with filters and details
+- An admin dashboard for creating, editing and deleting hotels
+- SweetAlert2 dialogs for confirmations and feedback
+- Image normalization helpers for a variety of backend image path formats
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## Quick Start
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+1. Install dependencies
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```powershell
+npm install
+```
 
-### `npm test`
+2. Run the development server
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```powershell
+npm start
+```
 
-### `npm run build`
+Open http://localhost:3000 (the app redirects `/` → `/hotel`).
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+3. Build for production
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```powershell
+npm run build
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+4. Run tests (once)
 
-### `npm run eject`
+```powershell
+npm test -- --watchAll=false
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Routes
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- Client hotel listing: `/hotel` (root `/` redirects here)
+- Admin dashboard (hotel management): `/admin/hotel`
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Clicking "Edit" on a client card navigates to the admin form and pre-fills the hotel details.
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Features
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Client page (cards): image, name, city, price per night, star rating, amenities, View/Edit/Delete
+- Filter sidebar: search by name, city dropdown, amenities checkboxes, price min/max, and star rating dropdown
+- Filter reset restores the full list and uses dynamic min/max price bounds derived from loaded data
+- Admin page: add/update hotel form, list table with actions
+- SweetAlert2 used for success, error, and confirmation dialogs
+- Image helpers normalize: absolute URLs, data URIs, `/storage/` paths, `storage/` paths, and `public/` paths
 
-### Code Splitting
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Admin sidebar & navigation
 
-### Analyzing the Bundle Size
+- Admin brand links to admin dashboard (`/admin/hotel`) and shows a quick "View site" link that opens the client listing (`/hotel`) in a new tab
+- Nav items use absolute admin routes (e.g., `/admin/hotel`) to avoid path ambiguity
+- Accessibility: `aria-label`, `title`, and keyboard-friendly toggles are included
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+---
 
-### Making a Progressive Web App
+## Backend expectations
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- API base: `http://localhost:8000`
+- Hotels endpoint (GET/POST/PUT/DELETE): `http://localhost:8000/api/hotels`
+- Images are expected to be available at `http://localhost:8000/storage/...` when returned as storage paths
 
-### Advanced Configuration
+If your backend uses a different host or storage path, update the image helper in `src/page/cliemt/hotel/HotelPage.js` and `src/page/admin/hotel/Hotel.js`.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+---
 
-### Deployment
+## Troubleshooting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- Images not loading: check `image` / `image_url` fields returned by the API and adjust the helper if needed
+- No hotels shown: ensure the backend API is running and returns a JSON array
+- Routing problems: check `src/App.js` for redirects and route entries
 
-### `npm run build` fails to minify
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## File locations (important)
+
+- `src/service/HotelService.js` — API client
+- `src/page/cliemt/hotel/HotelPage.js` — client list & filters (note folder name: `cliemt`)
+- `src/page/admin/hotel/Hotel.js` — admin page (form + list)
+- `src/page/admin/sidebar.js` — admin navigation
+
+---
+
+If you'd like, I can also append screenshots, a Postman collection for the API, or a short demo script to the README. Tell me which you'd prefer.
