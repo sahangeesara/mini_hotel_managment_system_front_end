@@ -193,7 +193,12 @@ function HotelPage() {
           <h2>Hotel List</h2>
           <p>Browse available hotels and review key details before booking.</p>
         </div>
-        <span className="hotel-count-badge">{filteredHotels.length} / {hotels.length} Hotels</span>
+        <div className="hotel-header-actions">
+          <button type="button" className="btn-add-hotel" onClick={() => navigate("/admin/hotel")}>
+            + Add Hotel
+          </button>
+          <span className="hotel-count-badge">{filteredHotels.length} / {hotels.length} Hotels</span>
+        </div>
       </div>
       <div className="hotel-container">
         <aside className="hotel-filter-sidebar">

@@ -48,7 +48,7 @@ const Sidebar = () => {
             </div>
           </NavLink>
 
-          <a href="/hotel" className="brand-client-link" title="Open client site" target="_blank" rel="noopener noreferrer">View site</a>
+          <a href="/hotel" className="brand-client-link" title="Open client site" target="_blank" rel="noopener noreferrer" style={{ color: 'white' }}>View site</a>
 
           <button className="collapse-toggle" onClick={() => setCollapsed(!collapsed)} aria-pressed={collapsed} aria-label="Collapse sidebar">
             <i className={`bi ${collapsed ? "bi-chevron-right" : "bi-chevron-left"}`} />

@@ -36,6 +36,38 @@
   white-space: nowrap;
 }
 
+.hotel-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-add-hotel {
+  background: #3b62f6;
+  color: #fff;
+  border: none;
+  border-radius: 9px;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.btn-add-hotel:hover {
+  background: #2d4fb0;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 98, 246, 0.3);
+}
+
+.btn-add-hotel:active {
+  transform: translateY(0);
+}
+
 /* Hotel Container with Sidebar */
 .hotel-container {
   display: grid;
@@ -517,6 +549,21 @@
 
   .client-hotel-header h2 {
     font-size: 24px;
+  }
+
+  .hotel-header-actions {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-add-hotel {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .hotel-count-badge {
+    align-self: flex-start;
   }
 
   /* Stack sidebar and content vertically on mobile */
